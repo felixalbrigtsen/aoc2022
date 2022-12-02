@@ -5,7 +5,7 @@ These are my attempts on [AoC 2022](https://adventofcode.com/2022/)
 | Day          | Part 1 | Part 2 | Language |
 |--------------|--------|--------|----------|
 | [01](day01)  |   ⭐   |   ⭐   | Python   |
-| 02           |        |        |          |
+| [02](day02)  |   ⭐   |   ⭐   | C        |
 | 03           |        |        |          |
 | 04           |        |        |          |
 | 05           |        |        |          |
