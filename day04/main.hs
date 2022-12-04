@@ -1,49 +1,49 @@
-import Data.Char
-
+  -- main.hs as written by me, thuroughly fixed by <https://github.com/h7x4>
+main :: IO ()
 main = do  
-  let list = []
   file <- readFile "input.txt"
-  let inputLines = lines file
-  let stringpairs = map (splitWhen (==',')) inputLines
+  let
+    pairs :: [((Int, Int), (Int, Int))]
+    pairs = inputLinesToPairs file
 
-  let listpairs = map (map parseRange) stringpairs
-  let pairs = map (\x -> (head x, last x)) listpairs
+  putStrLn "Part 1: "
+  print $ part1 pairs
 
-  -- Each line of input has now gone from "1-2,3-4" to ((1,2),(3,4))
+  putStrLn "Part 2: "
+  print $ part2 pairs
 
-  let containedWithin = map (uncurry rangeIsContained) pairs
-  let containedCount = length $ filter (==True) containedWithin
-  print "Part 1: "
-  print containedCount
+-- Map each line of input from "1-2,3-4" to ((1,2),(3,4))
+inputLinesToPairs :: String -> [((Int, Int), (Int, Int))]
+inputLinesToPairs input = result
+  where
+  stringpairs :: [[String]]
+  stringpairs = map (splitWhen (==',')) $ lines input 
 
-  let overlap = map (uncurry rangeOverlaps) pairs
-  let overlapCount = length $ filter (==True) overlap
-  print "Part 2: "
-  print overlapCount
+  parseRange :: String -> (Int, Int)
+  parseRange pair = (read first, read second)
+    where
+      (first:second:_) = splitWhen (=='-') pair 
+
+  result :: [((Int, Int), (Int, Int))]
+  result = map (\x -> (head x, last x)) $ map (map parseRange) stringpairs
 
 
--- "1-3" -> (1,3)
-parseRange :: String -> (Int, Int)
-parseRange pair = do
-  let numbers = splitWhen (=='-') pair
-  let first = read (numbers !! 0) :: Int
-  let second = read (numbers !! 1) :: Int
-  (first, second)
+part1 :: [((Int, Int), (Int, Int))] -> Int
+part1 = length . filter (uncurry rangeIsContained)
 
--- True if the first range is entirely contained in the second range, or vice versa
-rangeIsContained :: (Int, Int) -> (Int, Int) -> Bool
-rangeIsContained (lo1, hi1) (lo2, hi2)
-  | lo1 <= lo2 && hi1 >= hi2 = True
-  | lo1 >= lo2 && hi1 <= hi2 = True
-  | otherwise = False
+part2 :: [((Int, Int), (Int, Int))] -> Int
+part2 = length . filter (uncurry rangeOverlaps)
 
 -- True if any part of the two ranges overlap
 rangeOverlaps :: (Int, Int) -> (Int, Int) -> Bool
-rangeOverlaps (lo1, hi1) (lo2, hi2)
-  | rangeIsContained (lo1, lo1) (lo2, hi2) = True
-  | lo2 >= lo1 && lo2 <= hi1 = True
-  | hi2 >= lo1 && hi2 <= hi1 = True
-  | otherwise = False
+rangeOverlaps (lo1, hi1) (lo2, hi2) = rangeIsContained (lo1, lo1) (lo2, hi2)
+                                   || (lo2 >= lo1 && lo2 <= hi1)
+                                   || (hi2 >= lo1 && hi2 <= hi1)
+
+-- True if the first range is entirely contained in the second range, or vice versa
+rangeIsContained :: (Int, Int) -> (Int, Int) -> Bool
+rangeIsContained (lo1, hi1) (lo2, hi2) = (lo1 <= lo2 && hi1 >= hi2)
+                                      || (lo1 >= lo2 && hi1 <= hi2)
 
 -- Modified from Prelude.words
 splitWhen :: (Char -> Bool) -> String -> [String]
