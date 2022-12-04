@@ -7,7 +7,7 @@ These are my attempts on [AoC 2022](https://adventofcode.com/2022/)
 | [01](day01)  |   ⭐   |   ⭐   | Python   |
 | [02](day02)  |   ⭐   |   ⭐   | C        |
 | [03](day03)  |   ⭐   |   ⭐   | Rust     |
-| 04           |        |        |          |
+| [04](day04)  |   ⭐   |   ⭐   | Haskell  |
 | 05           |        |        |          |
 | 06           |        |        |          |
 | 07           |        |        |          |
