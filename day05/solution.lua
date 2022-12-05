@@ -68,8 +68,6 @@ if file == nil then
     os.exit(1)
 end
 
--- Parse input data
-
 inputLines = file:read("all")
 file:close()
 
