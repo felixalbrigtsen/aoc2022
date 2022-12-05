@@ -27,9 +27,10 @@ function Stack:reverse()
     return newStack
 end
 
-function Split(s, delimiter)
+function string:split(delimiter)
+    delimiter = delimiter or " "
     result = {};
-    for match in (s..delimiter):gmatch("(.-)"..delimiter) do
+    for match in (self..delimiter):gmatch("(.-)"..delimiter) do
         table.insert(result, match);
     end
     return result;
@@ -71,9 +72,9 @@ end
 inputLines = file:read("all")
 file:close()
 
-parts = Split(inputLines, "\n\n")
-initialState = Split(parts[1], "\n")
-moves = Split(parts[2], "\n")
+parts = inputLines:split("\n\n")
+initialState = parts[1]:split("\n")
+moves = parts[2]:split("\n")
 
 -- Initialize stacks
 stackCount = (#initialState[1] + 1) // 4
@@ -102,13 +103,14 @@ print("Initial state:")
 for i = 1, stackCount do
     print("Stack "..i..": "..table.concat(stacks[i], " "))
 end
+print("")
 
 -- Perform moves
 
 -- Part 1
 
 for i = 1, #moves do
-    move = Split(moves[i], " ")
+    move = moves[i]:split()
     count = tonumber(move[2])
     from = tonumber(move[4])
     to = tonumber(move[6])
@@ -132,7 +134,7 @@ print("Part 1: "..part1)
 
 -- Part 2
 for i = 1, #moves do
-    move = Split(moves[i], " ")
+    move = moves[i]:split()
     count = tonumber(move[2])
     from = tonumber(move[4])
     to = tonumber(move[6])
