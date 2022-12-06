@@ -9,7 +9,7 @@ These are my attempts on [AoC 2022](https://adventofcode.com/2022/)
 | [03](day03)  |   ⭐   |   ⭐   | Rust     |
 | [04](day04)  |   ⭐   |   ⭐   | Haskell  |
 | [05](day05)  |   ⭐   |   ⭐   | Lua      |
-| 06           |        |        |          |
+| [06](day06)  |   ⭐   |   ⭐   | Common Lisp |
 | 07           |        |        |          |
 | 08           |        |        |          |
 | 09           |        |        |          |
