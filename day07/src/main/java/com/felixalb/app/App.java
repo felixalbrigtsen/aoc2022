@@ -29,18 +29,36 @@ public class App {
 
 
     // Part 1
-    FileNode p1_root = fileSystemReader.getRoot();
+    FileNode root = fileSystemReader.getRoot();
+    root.printNode("");
+    System.out.println("\nTotal size: " + root.getSize() + "\n\n");
+
     Integer directorySizeSum = 0;
-    ArrayList<Integer> p1_sizes = p1_root.getDirectorySizesFlat(new ArrayList<Integer>());
-    // System.out.println("Part 1: " + p1_sizes);
-    for (Integer size : p1_sizes) {
+
+    ArrayList<Integer> directorySizes = root.getDirectorySizesFlat(new ArrayList<Integer>());
+    for (Integer size : directorySizes) {
       if (size <= 100000) {
         directorySizeSum += size;
       }
     }
-    p1_root.printNode("");
+
+    // Java 8 alternative:
+    // Predicate<Integer> isLarge = (size) -> size <= 1000000;
+    // directorySizeSum = directorySizes.stream().filter(isLarge).reduce(0, (a, b) -> a + b);
+
     System.out.println("Part 1: " + directorySizeSum);
 
+    // Part 2
+    Integer maxUsedSpace = 70000000 - 30000000;
+    Integer p2_usedSpace = root.getSize();
 
+    Collections.sort(directorySizes);
+
+    for (Integer size : directorySizes) {
+      if (p2_usedSpace - size <= maxUsedSpace) {
+        System.out.println("Part 2: " + size);
+        break;
+      }
+    }
   }
 }
