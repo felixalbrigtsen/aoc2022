@@ -169,15 +169,85 @@ function checkVisible(z) {
   }
 }
 
+
+function getScenicScore(x, y) {
+  let score = 1;
+  const height = forest[x][y];
+
+  if (x == 0 || x == rows-1 || y == 0 || y == cols-1) {
+    return 0
+  }
+
+  let doneNorth = false;
+  let doneSouth = false;
+  let doneWest = false;
+  let doneEast = false;
+
+  for (let i = 1; i <= Math.max(rows, cols); i++) {
+    if (!doneNorth) {
+      if (x-i <= 0 || forest[x-i][y] >= height) {
+        score *= i;
+        doneNorth = true;
+        // console.log("N", x, y, i);
+      }
+    }
+
+    if (!doneSouth) {
+      if (x+i >= rows-1 || forest[x+i][y] >= height) {
+        score *= i;
+        doneSouth = true;
+        // console.log("S", x, y, i);
+      }
+    }
+
+    if (!doneWest) {
+      if (y-i <= 0 || forest[x][y-i] >= height) {
+        score *= i;
+        doneWest = true;
+        // console.log("W", x, y, i);
+      }
+    }
+
+    if (!doneEast) {
+      if (y+i >= cols-1 || forest[x][y+i] >= height) {
+        score *= i;
+        doneEast = true;
+        // console.log("E", x, y, i);
+      }
+    }
+
+    if (doneNorth && doneSouth && doneWest && doneEast) {
+      break;
+    }
+  }
+
+  return score;
+
+}
+
+function scenicScores() {
+  let scores = [];
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < cols; j++) {
+      scores.push(getScenicScore(i, j));
+    }
+  }
+
+  return scores;
+}
+
 async function setup() {
   createCanvas(800, 600, WEBGL);
   frameRate(30);
 
   forest = await loadForest("input.txt")
   planeSize = (Math.max(rows, cols) + 4) * scale * 2;
-  console.log(forest);
+  // console.log(forest);
 
   camera(...cameraParams);
+
+  let p2Scores = scenicScores();
+  document.getElementById("scenicScore").innerHTML = Math.max(...p2Scores);
 }
 
 function draw() {
@@ -187,7 +257,7 @@ function draw() {
   drawScanner();
 
   if (scannerHeight < scale*10 && scannerHeight % scale == 0) {
-    console.log("Scanner height: " + scannerHeight);
+    console.log("Scanner height: " + (scannerHeight / scale));
     checkVisible(scannerHeight/scale);
   }
 
