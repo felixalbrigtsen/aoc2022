@@ -11,7 +11,7 @@ These are my attempts on [AoC 2022](https://adventofcode.com/2022/)
 | [05](day05)  |   ⭐   |   ⭐   | Lua      |
 | [06](day06)  |   ⭐   |   ⭐   | Common Lisp |
 | [07](day07)  |   ⭐   |   ⭐   | Java     |
-| 08           |        |        |          |
+| [08](day08)  |   ⭐   |        | p5.js (JavaScript) |
 | 09           |        |        |          |
 | 10           |        |        |          |
 | 11           |        |        |          |
