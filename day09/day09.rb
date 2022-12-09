@@ -1,53 +1,61 @@
-class RopeMover
-  attr_reader :head, :tail, :tailPositions
+class RopeKnot
+  attr_accessor :pos, :tail, :positions
 
-  def initialize
-    @head = { "x" => 0, "y" => 0 }
-    @tail = { "x" => 0, "y" => 0 }
-    @tailPositions = [[0, 0]]
+  def initialize(tail = {})
+    @pos = { "x" => 0, "y" => 0 }
+    @positions = [ [0, 0] ]
+    @tail = tail
   end
 
   def move(direction, distance)
     for i in 1..distance
       case direction
       when "U"
-        @head["y"] += 1
+        @pos["y"] += 1
       when "D"
-        @head["y"] -= 1
+        @pos["y"] -= 1
       when "L"
-        @head["x"] -= 1
+        @pos["x"] -= 1
       when "R"
-        @head["x"] += 1
+        @pos["x"] += 1
       end
-      self.updateTail
+
+      if !@tail.nil?
+        @tail.follow(@pos)
+      end
     end
   end
 
-  def updateTail
-
+  def follow(headpos)
     # If the tail is already neighboring the head, don't move (pythagorean theorem)
-    if (@head["x"] - @tail["x"])**2 + (@head["y"] - @tail["y"])**2 <= 2
+    if (headpos["x"] - @pos["x"])**2 + (headpos["y"] - @pos["y"])**2 <= 2
       return
     end
-    # puts "Updating tail towards #{@head["x"]}, #{@head["y"]}\n"
 
-    if (@head["x"] > @tail["x"]) then @tail["x"] += 1 end
-    if (@head["x"] < @tail["x"]) then @tail["x"] -= 1 end
+    if (headpos["x"] > @pos["x"]) then @pos["x"] += 1 end
+    if (headpos["x"] < @pos["x"]) then @pos["x"] -= 1 end
 
-    if (@head["y"] > @tail["y"]) then @tail["y"] += 1 end
-    if (@head["y"] < @tail["y"]) then @tail["y"] -= 1 end
+    if (headpos["y"] > @pos["y"]) then @pos["y"] += 1 end
+    if (headpos["y"] < @pos["y"]) then @pos["y"] -= 1 end
 
-
-    if !@tailPositions.include?([@tail["x"], @tail["y"]])
-      @tailPositions.push([@tail["x"], @tail["y"]])
+    if !@positions.include?([@pos["x"], @pos["y"]])
+      @positions.push([@pos["x"], @pos["y"]])
     end
 
+    if @tail.is_a? RopeKnot
+      @tail.follow(@pos)
+    end
   end
 
 end
 
+p1 = [RopeKnot.new]
+p1.push(RopeKnot.new(p1[0]))
 
-rope = RopeMover.new
+p2 = [RopeKnot.new]
+for i in 0..8
+  p2.push(RopeKnot.new(p2[i]))
+end
 
 # Read input file
 if ARGV.length == 0
@@ -62,7 +70,12 @@ input = File.read(inputFile)
 input = input.split("\n")
 for i in 0..input.length-1
   input[i] = input[i].split(" ")
-  rope.move(input[i][0], input[i][1].to_i)
+  dir = input[i][0]
+  dist = input[i][1].to_i
+
+  p1[1].move(dir, dist)
+  p2[9].move(dir, dist)
 end
 
-puts "Part 1, number of visited locations: #{rope.tailPositions.length}"
+puts "Part 1, number of visited locations: #{p1[0].positions.length}"
+puts "Part 2, number of visited locations: #{p2[0].positions.length}"

@@ -12,7 +12,7 @@ These are my attempts on [AoC 2022](https://adventofcode.com/2022/)
 | [06](day06)  |   ⭐   |   ⭐   | Common Lisp |
 | [07](day07)  |   ⭐   |   ⭐   | Java     |
 | [08](day08)  |   ⭐   |   ⭐   | p5.js (JavaScript) |
-| 09           |        |        |          |
+| [09](day09)  |   ⭐   |   ⭐   | Ruby     |
 | 10           |        |        |          |
 | 11           |        |        |          |
 | 12           |        |        |          |
