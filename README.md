@@ -13,7 +13,7 @@ These are my attempts on [AoC 2022](https://adventofcode.com/2022/)
 | [07](day07)  |   ⭐   |   ⭐   | Java     |
 | [08](day08)  |   ⭐   |   ⭐   | p5.js (JavaScript) |
 | [09](day09)  |   ⭐   |   ⭐   | Ruby (+ golf.py)   |
-| 10           |        |        |          |
+| [10](day10)  |   ⭐   |        | Forth    |
 | 11           |        |        |          |
 | 12           |        |        |          |
 | 13           |        |        |          |
