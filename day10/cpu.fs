@@ -14,6 +14,7 @@ s" input.txt" r/o open-file throw Value file-id
   ( read signed decimal number from the given address, 10 chars )
   10 s>number? throw drop
   swap
+  ( If the number starts with a minus sign, negate it )
   c@ 45 = if
     ( cr ." negating " dup . cr )
     negate
@@ -28,20 +29,15 @@ s" input.txt" r/o open-file throw Value file-id
   ( Read the first character to determine the operation )
   c@
   97 = if
-    ( ." addx" )
     ( read number from input+5 )
     linebuf 5 + get-number
     addx
   else
-    ( ." noop" )
     noop
   then
 ;
 
-: flushline ( -- )
-  ( cr ." flushing line" )
-  20 chars linebuf !
-;
+: flushline ( -- ) linelength chars linebuf ! ;
 
 : inputloop ( -- )
   ( Start the first instruction with a leading 1, then remove it )
@@ -50,6 +46,7 @@ s" input.txt" r/o open-file throw Value file-id
   swap drop
   flushline
 
+  ( while there are still lines in the file, read and execute them )
   begin
     get-line
   while
