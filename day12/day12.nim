@@ -126,20 +126,18 @@ rows = lines.len
 cols = lines[0].len
 
 # Parse step: Read the lines and build the grid of numbers
-for i in 0 ..< rows:
+for y in 0 ..< rows:
   grid.add(newSeq[int](cols))
-  for j in 0 ..< cols:
-    var c = lines[i][j]
+  for x in 0 ..< cols:
+    var c = lines[y][x]
     if c == 'S':
-      point_S.x = j
-      point_S.y = i
+      point_S = Point(x: x, y: y)
       c = 'a'
     elif c == 'E':
-      point_E.x = j
-      point_E.y = i
+      point_E = Point(x: x, y: y)
       c = 'z'
 
-    grid[i][j] = ord(c)-ord('a')
+    grid[y][x] = ord(c)-ord('a')
 
 echo "Start: ", point_S
 echo "Finish: ", point_E
