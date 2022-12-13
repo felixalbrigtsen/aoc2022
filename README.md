@@ -15,7 +15,7 @@ These are my attempts on [AoC 2022](https://adventofcode.com/2022/)
 | [09](day09)  |   ⭐   |   ⭐   | Ruby (+ golf.py)   |
 | [10](day10)  |   ⭐   |   ⭐   | Forth    |
 | 11           |        |        |          |
-| 12           |        |        |          |
+| [12](day12)  |   ⭐   |   ⭐   | Nim      |
 | 13           |        |        |          |
 | 14           |        |        |          |
 | 15           |        |        |          |
